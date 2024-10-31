@@ -1,8 +1,13 @@
 package com.woutervdb.turbomodernity.languages.php;
 
+import com.woutervdb.turbomodernity.grammars.php.PhpParser;
 import com.woutervdb.turbomodernity.languages.Language;
+import com.woutervdb.turbomodernity.languages.VersionConstraint;
+import com.woutervdb.turbomodernity.versioning.Version;
 
-public class Php extends Language<PhpVersion> {
+import java.util.Set;
+
+public class Php extends Language {
     public static final PhpVersion PHP_4_0 = PhpVersion.of(4, 0, "2000-05-22", "2000-10-10");
     public static final PhpVersion PHP_4_1 = PhpVersion.of(4, 1, "2001-12-10", "2002-03-12");
     public static final PhpVersion PHP_4_2 = PhpVersion.of(4, 2, "2002-04-22", "2002-09-06");
@@ -31,27 +36,34 @@ public class Php extends Language<PhpVersion> {
     private Php() {
         super();
 
-        addVersion(PHP_4_0);
-        addVersion(PHP_4_1);
-        addVersion(PHP_4_2);
-        addVersion(PHP_4_3);
-        addVersion(PHP_4_4);
-        addVersion(PHP_5_0);
-        addVersion(PHP_5_1);
-        addVersion(PHP_5_2);
-        addVersion(PHP_5_3);
-        addVersion(PHP_5_4);
-        addVersion(PHP_5_5);
-        addVersion(PHP_5_6);
-        addVersion(PHP_7_0);
-        addVersion(PHP_7_1);
-        addVersion(PHP_7_2);
-        addVersion(PHP_7_3);
-        addVersion(PHP_7_4);
-        addVersion(PHP_8_0);
-        addVersion(PHP_8_1);
-        addVersion(PHP_8_2);
-        addVersion(PHP_8_3);
-        addVersion(PHP_8_4);
+        addDecider(PhpParser.ImportStatementContext.class, (ctx) -> VersionConstraint.from(PHP_5_3));
+
+    }
+
+    protected Set<Version> getVersions() {
+        return Set.of(
+                PHP_4_0,
+                PHP_4_1,
+                PHP_4_2,
+                PHP_4_3,
+                PHP_4_4,
+                PHP_5_0,
+                PHP_5_1,
+                PHP_5_2,
+                PHP_5_3,
+                PHP_5_4,
+                PHP_5_5,
+                PHP_5_6,
+                PHP_7_0,
+                PHP_7_1,
+                PHP_7_2,
+                PHP_7_3,
+                PHP_7_4,
+                PHP_8_0,
+                PHP_8_1,
+                PHP_8_2,
+                PHP_8_3,
+                PHP_8_4
+        );
     }
 }

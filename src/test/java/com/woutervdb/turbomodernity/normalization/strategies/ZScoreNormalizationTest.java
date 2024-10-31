@@ -1,16 +1,14 @@
 package com.woutervdb.turbomodernity.normalization.strategies;
 
-import com.woutervdb.turbomodernity.languages.MockLanguage;
 import com.woutervdb.turbomodernity.normalization.NormalizationStrategy;
 import com.woutervdb.turbomodernity.signature.ModernitySignature;
-import com.woutervdb.turbomodernity.versioning.MockVersion;
 
 import java.util.List;
 
 class ZScoreNormalizationTest extends BaseNormalizationStrategyTest {
 
     @Override
-    protected List<ModernitySignature<MockLanguage, MockVersion>> getBeforeSignatures() {
+    protected List<ModernitySignature> getBeforeSignatures() {
         return List.of(
                 makeSignature(0.0, 1.0, 2.0, 3.0, 4.0),
                 makeSignature(1.0, 2.0, 3.0, 4.0, 5.0),
@@ -21,7 +19,7 @@ class ZScoreNormalizationTest extends BaseNormalizationStrategyTest {
     }
 
     @Override
-    protected List<ModernitySignature<MockLanguage, MockVersion>> getAfterSignatures() {
+    protected List<ModernitySignature> getAfterSignatures() {
         return List.of(
                 makeSignature(
                         (0.0 - 2) / Math.sqrt(2),
@@ -44,7 +42,7 @@ class ZScoreNormalizationTest extends BaseNormalizationStrategyTest {
     }
 
     @Override
-    protected NormalizationStrategy<MockLanguage, MockVersion> getNormalizationStrategy() {
-        return new ZScoreNormalization<>();
+    protected NormalizationStrategy getNormalizationStrategy() {
+        return new ZScoreNormalization();
     }
 }

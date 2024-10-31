@@ -8,9 +8,15 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public final class PhpVersion extends SemanticVersion {
+    private static final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private final Date releasedAt;
     private final Date supportedUntil;
-    private static final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+    private PhpVersion(int major, int minor, Date releasedAt, Date supportedUntil) {
+        super(major, minor, 0);
+        this.releasedAt = releasedAt;
+        this.supportedUntil = supportedUntil;
+    }
 
     public static PhpVersion of(int major, int minor, String releasedAt, String supportedUntil) {
         Date releaseDate;
@@ -29,12 +35,6 @@ public final class PhpVersion extends SemanticVersion {
         }
 
         return new PhpVersion(major, minor, releaseDate, supportedUntilDate);
-    }
-
-    private PhpVersion(int major, int minor, Date releasedAt, Date supportedUntil) {
-        super(major, minor, 0);
-        this.releasedAt = releasedAt;
-        this.supportedUntil = supportedUntil;
     }
 
     public Date getReleasedAt() {

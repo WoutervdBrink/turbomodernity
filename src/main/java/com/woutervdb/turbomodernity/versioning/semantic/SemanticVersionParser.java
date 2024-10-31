@@ -1,9 +1,11 @@
 package com.woutervdb.turbomodernity.versioning.semantic;
 
-import com.woutervdb.turbomodernity.grammars.semantic.*;
+import com.woutervdb.turbomodernity.grammars.semantic.SemanticVersionErrorListener;
+import com.woutervdb.turbomodernity.grammars.semantic.SemanticVersionParserLexer;
+import com.woutervdb.turbomodernity.grammars.semantic.SemanticVersionParserParser;
+import com.woutervdb.turbomodernity.grammars.semantic.SemanticVersionVisitor;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.ParseTree;
-import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 public final class SemanticVersionParser {
     private static final SemanticVersionErrorListener errorListener = new SemanticVersionErrorListener();

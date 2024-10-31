@@ -4,7 +4,7 @@ import com.woutervdb.turbomodernity.BaseTest;
 import com.woutervdb.turbomodernity.versioning.Version;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
-import  org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class SemanticVersionTest extends BaseTest {
-    static SemanticVersion[] ORDERED_VERSIONS = new SemanticVersion[] {
+    static SemanticVersion[] ORDERED_VERSIONS = new SemanticVersion[]{
             new SemanticVersion(1, 0, 0, "alpha"),
             new SemanticVersion(1, 0, 0, "alpha", "1"),
             new SemanticVersion(1, 0, 0, "alpha", "beta"),
@@ -37,6 +37,15 @@ public class SemanticVersionTest extends BaseTest {
             new SemanticVersion(3, 0, 0, "A"),
             new SemanticVersion(3, 0, 0, "AA"),
     };
+
+    public static Stream<SemanticVersion> versions() {
+        return Stream.of(ORDERED_VERSIONS);
+    }
+
+    public static Stream<Arguments> orderedVersions() {
+        return IntStream.range(1, ORDERED_VERSIONS.length)
+                .mapToObj(i -> Arguments.arguments(ORDERED_VERSIONS[i - 1], ORDERED_VERSIONS[i]));
+    }
 
     @ParameterizedTest(name = "[{index}] {0} is older than {1}")
     @MethodSource("orderedVersions")
@@ -93,14 +102,5 @@ public class SemanticVersionTest extends BaseTest {
         };
 
         assertNotEquals(version, otherVersionType);
-    }
-
-    public static Stream<SemanticVersion> versions() {
-        return Stream.of(ORDERED_VERSIONS);
-    }
-
-    public static Stream<Arguments> orderedVersions() {
-        return IntStream.range(1, ORDERED_VERSIONS.length)
-                .mapToObj(i -> Arguments.arguments(ORDERED_VERSIONS[i - 1], ORDERED_VERSIONS[i]));
     }
 }

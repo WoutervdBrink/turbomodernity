@@ -1,15 +1,13 @@
 package com.woutervdb.turbomodernity.normalization.strategies;
 
-import com.woutervdb.turbomodernity.languages.Language;
 import com.woutervdb.turbomodernity.normalization.BaseNormalizationStrategy;
 import com.woutervdb.turbomodernity.signature.ModernitySignature;
-import com.woutervdb.turbomodernity.versioning.Version;
 
-public class LogarithmicNormalization<L extends Language<V>, V extends Version> extends BaseNormalizationStrategy<L, V> {
+public class LogarithmicNormalization extends BaseNormalizationStrategy {
     private Double logOfProducts = 1.0;
 
     @Override
-    protected void beforeNormalize(ModernitySignature<L, V> signature) {
+    protected void beforeNormalize(ModernitySignature signature) {
         logOfProducts = Math.log(signature.stream().reduce(1.0, (a, b) -> a * b));
     }
 

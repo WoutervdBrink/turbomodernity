@@ -17,14 +17,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public abstract class BaseNormalizationStrategyTest extends BaseTest {
-    protected abstract List<ModernitySignature<MockLanguage, MockVersion>> getBeforeSignatures();
+    protected abstract List<ModernitySignature> getBeforeSignatures();
 
-    protected abstract List<ModernitySignature<MockLanguage, MockVersion>> getAfterSignatures();
+    protected abstract List<ModernitySignature> getAfterSignatures();
 
-    protected abstract NormalizationStrategy<MockLanguage, MockVersion> getNormalizationStrategy();
+    protected abstract NormalizationStrategy getNormalizationStrategy();
 
-    protected ModernitySignature<MockLanguage, MockVersion> makeSignature(Double v1, Double v2, Double v3, Double v4, Double v5) {
-        ModernitySignature<MockLanguage, MockVersion> sig = new ModernitySignature<>(MockLanguage.INSTANCE);
+    protected ModernitySignature makeSignature(Double v1, Double v2, Double v3, Double v4, Double v5) {
+        ModernitySignature sig = new ModernitySignature(MockLanguage.INSTANCE);
 
         sig.setValue(MockVersion.V1, v1);
         sig.setValue(MockVersion.V2, v2);
@@ -38,23 +38,23 @@ public abstract class BaseNormalizationStrategyTest extends BaseTest {
 
     @ParameterizedTest(name = "[{index}] {0} normalizes to {1}")
     @MethodSource("testCases")
-    public void it_normalizes(ModernitySignature<MockLanguage, MockVersion> before, ModernitySignature<MockLanguage, MockVersion> after) {
-        ModernitySignature<MockLanguage, MockVersion> beforeCopy = before.copy();
+    public void it_normalizes(ModernitySignature before, ModernitySignature after) {
+        ModernitySignature beforeCopy = before.copy();
 
-        ModernitySignature<MockLanguage, MockVersion> normalized = getNormalizationStrategy().normalize(before);
+        ModernitySignature normalized = getNormalizationStrategy().normalize(before);
 
         assertEquals(after, normalized, "Error in test: after modernity signature should be normalized!");
         assertEquals(beforeCopy, before, "Error in test: before modernity signature should not be altered!");
     }
 
     public Iterator<Arguments> testCases() {
-        List<ModernitySignature<MockLanguage, MockVersion>> beforeSignatures = getBeforeSignatures();
-        List<ModernitySignature<MockLanguage, MockVersion>> afterSignatures = getAfterSignatures();
+        List<ModernitySignature> beforeSignatures = getBeforeSignatures();
+        List<ModernitySignature> afterSignatures = getAfterSignatures();
 
         assertEquals(beforeSignatures.size(), afterSignatures.size(), "Error in test: amount of before and after signatures should be equal!");
 
-        Iterator<ModernitySignature<MockLanguage, MockVersion>> beforeIterator = beforeSignatures.iterator();
-        Iterator<ModernitySignature<MockLanguage, MockVersion>> afterIterator = afterSignatures.iterator();
+        Iterator<ModernitySignature> beforeIterator = beforeSignatures.iterator();
+        Iterator<ModernitySignature> afterIterator = afterSignatures.iterator();
 
         return new Iterator<>() {
             @Override

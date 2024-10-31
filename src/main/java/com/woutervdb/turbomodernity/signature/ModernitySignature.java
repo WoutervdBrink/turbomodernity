@@ -9,11 +9,11 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class ModernitySignature<L extends Language<V>, V extends Version> {
-    private final Map<V, Double> values;
-    private final L language;
+public class ModernitySignature {
+    private final Map<Version, Double> values;
+    private final Language language;
 
-    public ModernitySignature(L language) {
+    public ModernitySignature(Language language) {
         this.language = language;
 
         values = new HashMap<>();
@@ -21,7 +21,7 @@ public class ModernitySignature<L extends Language<V>, V extends Version> {
         language.versions().forEach((v) -> values.put(v, 0.0));
     }
 
-    public List<V> versions() {
+    public List<Version> versions() {
         return values.keySet().stream().sorted().collect(Collectors.toList());
     }
 
@@ -29,7 +29,7 @@ public class ModernitySignature<L extends Language<V>, V extends Version> {
         return values.size();
     }
 
-    public Double getValue(V version) {
+    public Double getValue(Version version) {
         Double d = values.get(version);
 
         if (d == null) {
@@ -39,19 +39,19 @@ public class ModernitySignature<L extends Language<V>, V extends Version> {
         return d;
     }
 
-    public void setValue(V version, Double value) {
+    public void setValue(Version version, Double value) {
         values.put(version, value);
     }
 
-    public ModernitySignature<L, V> copy() {
-        ModernitySignature<L, V> clone = new ModernitySignature<>(language);
+    public ModernitySignature copy() {
+        ModernitySignature clone = new ModernitySignature(language);
         clone.values.putAll(values);
         return clone;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof ModernitySignature<?, ?> other)) {
+        if (!(obj instanceof ModernitySignature other)) {
             return false;
         }
 

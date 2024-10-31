@@ -9,11 +9,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class BaseNormalizationStrategyTest extends BaseTest {
-    private ModernitySignature<MockLanguage, MockVersion> sig;
+    private ModernitySignature sig;
 
     @BeforeEach
     public void setUp() {
-        sig = new ModernitySignature<>(MockLanguage.INSTANCE);
+        sig = new ModernitySignature(MockLanguage.INSTANCE);
 
         sig.setValue(MockVersion.V1, 1.0);
         sig.setValue(MockVersion.V2, 2.0);
@@ -24,10 +24,10 @@ class BaseNormalizationStrategyTest extends BaseTest {
 
     @Test
     public void it_does_nothing_to_values_by_default() {
-        NormalizationStrategy<MockLanguage, MockVersion> strategy = new BaseNormalizationStrategy<>() {
+        NormalizationStrategy strategy = new BaseNormalizationStrategy() {
         };
 
-        ModernitySignature<MockLanguage, MockVersion> result = strategy.normalize(sig);
+        ModernitySignature result = strategy.normalize(sig);
 
         assertEquals(1, sig.getValue(MockVersion.V1));
         assertEquals(1, result.getValue(MockVersion.V1));
@@ -50,9 +50,9 @@ class BaseNormalizationStrategyTest extends BaseTest {
         final boolean[] calledBeforeNormalize = {false};
         final boolean[] didCallNormalize = {false};
 
-        NormalizationStrategy<MockLanguage, MockVersion> strategy = new BaseNormalizationStrategy<>() {
+        NormalizationStrategy strategy = new BaseNormalizationStrategy() {
             @Override
-            protected void beforeNormalize(ModernitySignature<MockLanguage, MockVersion> signature) {
+            protected void beforeNormalize(ModernitySignature signature) {
                 if (!didCallNormalize[0]) {
                     calledBeforeNormalize[0] = true;
                 }
@@ -76,9 +76,9 @@ class BaseNormalizationStrategyTest extends BaseTest {
         final boolean[] calledAfterNormalize = {false};
         final boolean[] didCallNormalize = {false};
 
-        NormalizationStrategy<MockLanguage, MockVersion> strategy = new BaseNormalizationStrategy<>() {
+        NormalizationStrategy strategy = new BaseNormalizationStrategy() {
             @Override
-            protected void afterNormalize(ModernitySignature<MockLanguage, MockVersion> signature) {
+            protected void afterNormalize(ModernitySignature signature) {
                 if (didCallNormalize[0]) {
                     calledAfterNormalize[0] = true;
                 }
@@ -100,7 +100,7 @@ class BaseNormalizationStrategyTest extends BaseTest {
 
     @Test
     public void it_does_not_alter_the_original_signature() {
-        NormalizationStrategy<MockLanguage, MockVersion> strategy = new BaseNormalizationStrategy<>() {
+        NormalizationStrategy strategy = new BaseNormalizationStrategy() {
             @Override
             protected Double normalize(Double value) {
                 return 0.0;
@@ -118,14 +118,14 @@ class BaseNormalizationStrategyTest extends BaseTest {
 
     @Test
     public void it_allows_changing_the_normalization_method() {
-        NormalizationStrategy<MockLanguage, MockVersion> strategy = new BaseNormalizationStrategy<>() {
+        NormalizationStrategy strategy = new BaseNormalizationStrategy() {
             @Override
             protected Double normalize(Double value) {
                 return value * 2;
             }
         };
 
-        ModernitySignature<MockLanguage, MockVersion> result = strategy.normalize(sig);
+        ModernitySignature result = strategy.normalize(sig);
 
         assertEquals(2.0, result.getValue(MockVersion.V1));
         assertEquals(4.0, result.getValue(MockVersion.V2));

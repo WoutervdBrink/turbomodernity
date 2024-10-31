@@ -1,6 +1,5 @@
 package com.woutervdb.turbomodernity.normalization;
 
-import com.woutervdb.turbomodernity.languages.Language;
 import com.woutervdb.turbomodernity.signature.ModernitySignature;
 import com.woutervdb.turbomodernity.versioning.Version;
 
@@ -30,17 +29,14 @@ import com.woutervdb.turbomodernity.versioning.Version;
  *
  * <p>Overriding the {@link #normalize(ModernitySignature)} method is not allowed. If you wish to override this method,
  * it is better to write your own implementation of {@link ModernitySignature}.</p>
- *
- * @param <L> {@inheritDoc}
- * @param <V> {@inheritDoc}
  */
-public abstract class BaseNormalizationStrategy<L extends Language<V>, V extends Version> implements NormalizationStrategy<L, V> {
-    public final ModernitySignature<L, V> normalize(final ModernitySignature<L, V> signature) {
-        ModernitySignature<L, V> result = signature.copy();
+public abstract class BaseNormalizationStrategy implements NormalizationStrategy {
+    public final ModernitySignature normalize(final ModernitySignature signature) {
+        ModernitySignature result = signature.copy();
 
         beforeNormalize(result);
 
-        for (V version : signature.versions()) {
+        for (Version version : signature.versions()) {
             result.setValue(version, normalize(signature.getValue(version)));
         }
 
@@ -56,18 +52,18 @@ public abstract class BaseNormalizationStrategy<L extends Language<V>, V extends
      *
      * @param signature The <b>copy</b> of the signature that is to be normalized.
      */
-    protected void beforeNormalize(ModernitySignature<L, V> signature) {
+    protected void beforeNormalize(ModernitySignature signature) {
         // Do nothing.
     }
 
     /**
      * Do something with the signature <b>after</b> normalization.
-     * 
+     *
      * <p>The default implementation is to do nothing.</p>
-     * 
+     *
      * @param signature The <b>processed</b> normalized signature.
      */
-    protected void afterNormalize(ModernitySignature<L, V> signature) {
+    protected void afterNormalize(ModernitySignature signature) {
         // Do nothing.
     }
 

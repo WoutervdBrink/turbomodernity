@@ -2,7 +2,6 @@ package com.woutervdb.turbomodernity.versioning.semantic;
 
 import com.woutervdb.turbomodernity.versioning.Version;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 

@@ -22,6 +22,15 @@ class SimpleVersionTest extends BaseTest {
             new SimpleVersion(5),
     };
 
+    public static Stream<SimpleVersion> versions() {
+        return Stream.of(ORDERED_VERSIONS);
+    }
+
+    public static Stream<Arguments> orderedVersions() {
+        return IntStream.range(1, ORDERED_VERSIONS.length)
+                .mapToObj(i -> Arguments.arguments(ORDERED_VERSIONS[i - 1], ORDERED_VERSIONS[i]));
+    }
+
     @Test
     public void it_sets_the_version() {
         SimpleVersion v1 = new SimpleVersion(1);
@@ -72,14 +81,5 @@ class SimpleVersionTest extends BaseTest {
         };
 
         assertNotEquals(version, otherVersionType);
-    }
-
-    public static Stream<SimpleVersion> versions() {
-        return Stream.of(ORDERED_VERSIONS);
-    }
-
-    public static Stream<Arguments> orderedVersions() {
-        return IntStream.range(1, ORDERED_VERSIONS.length)
-                .mapToObj(i -> Arguments.arguments(ORDERED_VERSIONS[i - 1], ORDERED_VERSIONS[i]));
     }
 }

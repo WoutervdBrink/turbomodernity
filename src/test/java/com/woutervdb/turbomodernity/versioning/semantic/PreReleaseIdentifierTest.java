@@ -3,7 +3,7 @@ package com.woutervdb.turbomodernity.versioning.semantic;
 import com.woutervdb.turbomodernity.BaseTest;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class PreReleaseIdentifierTest extends BaseTest {
     @Test
