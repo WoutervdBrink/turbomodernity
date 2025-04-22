@@ -78,4 +78,16 @@ public class ModernitySignature {
     public Double vectorLength() {
         return Math.sqrt(stream().mapToDouble(v -> v * v).sum());
     }
+
+    public ModernitySignature add(ModernitySignature other) {
+        if (!other.language.equals(language)) {
+            throw new IllegalArgumentException("Signatures must share languages");
+        }
+
+        ModernitySignature sig = new ModernitySignature(language);
+        sig.values.putAll(values);
+        other.values.forEach((version, value) -> sig.values.merge(version, value, Double::sum));
+
+        return sig;
+    }
 }

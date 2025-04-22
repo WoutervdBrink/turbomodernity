@@ -30,6 +30,7 @@ parser grammar PhpParser;
 
 options {
     tokenVocab = PhpLexer;
+    contextSuperClass=org.antlr.v4.runtime.RuleContextWithAltNum;
 }
 
 // HTML

@@ -22,4 +22,9 @@ public final class MockVersion extends Version {
 
         return Integer.compare(version, other.version);
     }
+
+    @Override
+    public String toString() {
+        return "v" + this.version;
+    }
 }

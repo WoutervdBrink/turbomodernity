@@ -2,7 +2,7 @@ package com.woutervdb.turbomodernity.languages.php;
 
 import com.woutervdb.turbomodernity.grammars.php.PhpParser;
 import com.woutervdb.turbomodernity.languages.Language;
-import com.woutervdb.turbomodernity.languages.VersionConstraint;
+import com.woutervdb.turbomodernity.versioning.ranges.VersionRange;
 import com.woutervdb.turbomodernity.versioning.Version;
 
 import java.util.Set;
@@ -36,8 +36,13 @@ public class Php extends Language {
     private Php() {
         super();
 
-        addDecider(PhpParser.ImportStatementContext.class, (ctx) -> VersionConstraint.from(PHP_5_3));
-
+        addDecider(PhpParser.ImportStatementContext.class, (ctx) -> VersionRange.from(PHP_5_3));
+        addDecider(PhpParser.UseDeclarationContentContext.class, (ctx) -> VersionRange.from(PHP_5_3));
+        addDecider(PhpParser.UseDeclarationContentListContext.class, (ctx) -> VersionRange.from(PHP_5_3));
+        addDecider(PhpParser.UseDeclarationContext.class, (ctx) -> VersionRange.from(PHP_5_3));
+        addDecider(PhpParser.NamespaceDeclarationContext.class, (ctx) -> VersionRange.from(PHP_5_3));
+        addDecider(PhpParser.FormalParameterListContext.class, (ctx) -> ctx.Comma().size() == ctx.formalParameter().size() ? VersionRange.from(PHP_8_0) : null);
+        addDecider(PhpParser.EnumDeclarationContext.class, (ctx) -> VersionRange.from(PHP_8_1));
     }
 
     protected Set<Version> getVersions() {
